@@ -14,7 +14,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Spartan, sans-serif;
+  font-family: League Spartan, sans-serif;
   font-size: 12px;
 }
 
@@ -96,7 +96,15 @@ h3 {
   font-size: 30px;
   color: rgb(129, 129, 129);
   margin-right: 30px;
+  /* cursor changes the icon when over the icons */
+  cursor: pointer;
+  /* user-select prevents the icon being selected like normal text could be */
+  user-select: none;
+}
 
+.fas:hover {
+/* buttons will become darker on hover */
+  filter: brightness(80%)
 }
 
 .main-button {
