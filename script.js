@@ -6,6 +6,18 @@ const music = document.querySelector('audio');
 const prevBtn = document.getElementById('prev');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
+const slider = document.getElementById('volume-slider')
+
+// start volume
+music.volume = 0.5;
+
+
+// oninput method gets the value of the slider and calls the function. 
+slider.oninput = function() {
+    console.log(this.value)
+    // music volume ranges from 0-1
+    music.volume = (this.value/100);
+}
 
 //Music
 //an object within an array
@@ -30,10 +42,13 @@ const songs = [
         displayName: 'Metric 1',
         artist: 'Jacinto Design',
     },
-    
 ]
 
 let isPlaying = false;
+
+// volume slider
+
+
 
 // Play 
 function playSong() {
@@ -69,7 +84,9 @@ let songIndex =0;
 // Next song 
 function nextSong() {
     songIndex++;
-    console.log(songIndex);
+    if (songIndex > songs.length -1) {
+        songIndex = 0;
+    }
     loadSong(songs[songIndex]);
     playSong();
 }
@@ -77,7 +94,9 @@ function nextSong() {
 // Previous song 
 function prevSong() {
     songIndex--;
-    console.log(songIndex);
+    if (songIndex < 0) {
+        songIndex = songs.length -1
+    }
     loadSong(songs[songIndex]);
     playSong();
 }
