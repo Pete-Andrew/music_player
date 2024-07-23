@@ -14,8 +14,10 @@ let musicVolume = 0.5;
 music.volume = musicVolume;
 // checks to see if volume is muted
 let toggleOn = true;
-
+//variable to store the sliderValue
 let sliderValue;
+// stop/pause variable
+let isPlaying = false;
 
 //Music
 //an object within an array
@@ -42,42 +44,42 @@ const songs = [
     },
 ]
 
-let isPlaying = false;
+
 
 // volume slider
 // oninput method gets the value of the slider and calls the function. 
-slider.oninput = function() { 
+slider.oninput = function () {
     //stores the slider value
-    sliderValue = this.value;  
+    sliderValue = this.value;
     //checks to see if the music is muted
     if (toggleOn == true) {
-    // music volume ranges from 0-1
-    musicVolume = (this.value/100);
-    setMusicVolume();}
+        // music volume ranges from 0-1
+        musicVolume = (this.value / 100);
+        setMusicVolume();
+    }
 }
 
 //passed the musicVolume variable to the music object volume property (e.g. updates the volume) 
-function setMusicVolume () {
+function setMusicVolume() {
     music.volume = musicVolume;
 }
 
 // mute function
-function muteVolume () {
-   muteButton.classList.toggle('fa-volume-mute');
-   muteButton.classList.toggle('fa-volume-up');
-   
-   if (toggleOn == true) {
-    toggleOn = false;
-    musicVolume = 0;
-    setMusicVolume();
+function muteVolume() {
+    muteButton.classList.toggle('fa-volume-mute');
+    muteButton.classList.toggle('fa-volume-up');
 
-   } else { 
-    toggleOn = true;
-    musicVolume = (sliderValue/100)
-    setMusicVolume();
-   }
+    if (toggleOn == true) {
+        toggleOn = false;
+        musicVolume = 0;
+        setMusicVolume();
+
+    } else {
+        toggleOn = true;
+        musicVolume = (sliderValue / 100)
+        setMusicVolume();
+    }
 }
-
 
 // Play 
 function playSong() {
@@ -97,7 +99,7 @@ function pauseSong() {
 }
 
 // play pause event listener with a ternary line to switch between.
-playBtn.addEventListener('click', ()=> (isPlaying ? pauseSong() : playSong() ))
+playBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()))
 
 //update the dom
 function loadSong(song) {
@@ -108,12 +110,12 @@ function loadSong(song) {
 }
 
 // current song 
-let songIndex =0;
+let songIndex = 0;
 
 // Next song 
 function nextSong() {
     songIndex++;
-    if (songIndex > songs.length -1) {
+    if (songIndex > songs.length - 1) {
         songIndex = 0;
     }
     loadSong(songs[songIndex]);
@@ -124,14 +126,14 @@ function nextSong() {
 function prevSong() {
     songIndex--;
     if (songIndex < 0) {
-        songIndex = songs.length -1
+        songIndex = songs.length - 1
     }
     loadSong(songs[songIndex]);
     playSong();
 }
 
 //  On load - select first song from the songs array 
-loadSong(songs[songIndex]); 
+loadSong(songs[songIndex]);
 
 // Even listeners
 prevBtn.addEventListener('click', prevSong);
