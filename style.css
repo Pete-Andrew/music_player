@@ -19,7 +19,7 @@ body {
 }
 
 .player-container {
-  height: 575px;
+  height: 625px;
   width: 400px;
   background: #e7edf3;
   /* adds round corners */
@@ -63,6 +63,13 @@ h3 {
   display: flex;
   margin-left: 25%;
   
+}
+
+#mute-button {
+  margin-top:6%;
+  /* makes the icon central */
+  text-align:center; 
+  width:100%; 
 }
 
 /* Progress */

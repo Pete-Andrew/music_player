@@ -6,18 +6,16 @@ const music = document.querySelector('audio');
 const prevBtn = document.getElementById('prev');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
-const slider = document.getElementById('volume-slider')
+const slider = document.getElementById('volume-slider');
+let muteButton = document.getElementById('mute-button');
+let musicVolume = 0.5;
 
 // start volume
-music.volume = 0.5;
+music.volume = musicVolume;
+// checks to see if volume is muted
+let toggleOn = true;
 
-
-// oninput method gets the value of the slider and calls the function. 
-slider.oninput = function() {
-    console.log(this.value)
-    // music volume ranges from 0-1
-    music.volume = (this.value/100);
-}
+let sliderValue;
 
 //Music
 //an object within an array
@@ -47,7 +45,38 @@ const songs = [
 let isPlaying = false;
 
 // volume slider
+// oninput method gets the value of the slider and calls the function. 
+slider.oninput = function() { 
+    //stores the slider value
+    sliderValue = this.value;  
+    //checks to see if the music is muted
+    if (toggleOn == true) {
+    // music volume ranges from 0-1
+    musicVolume = (this.value/100);
+    setMusicVolume();}
+}
 
+//passed the musicVolume variable to the music object volume property (e.g. updates the volume) 
+function setMusicVolume () {
+    music.volume = musicVolume;
+}
+
+// mute function
+function muteVolume () {
+   muteButton.classList.toggle('fa-volume-mute');
+   muteButton.classList.toggle('fa-volume-up');
+   
+   if (toggleOn == true) {
+    toggleOn = false;
+    musicVolume = 0;
+    setMusicVolume();
+
+   } else { 
+    toggleOn = true;
+    musicVolume = (sliderValue/100)
+    setMusicVolume();
+   }
+}
 
 
 // Play 
