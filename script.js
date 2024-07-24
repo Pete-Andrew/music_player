@@ -7,6 +7,8 @@ const prevBtn = document.getElementById('prev');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
 const slider = document.getElementById('volume-slider');
+const currentTimeEl = document.getElementById('current-time');
+const durationEl = document.getElementById('duration');
 const progressContainer = document.getElementById('progress-container');
 const progress = document.getElementById('progress');
 
@@ -149,6 +151,32 @@ function updateProgressBar (e) {
         // console.log ("progress percentage " + progressPercent)
         // updates the css, uses a template literal as this needs to be passed as a string
         progress.style.width = `${progressPercent}%`;
+        // calculates the display for the duration 
+        const durationMinutes = Math.floor(duration/60)
+        console.log("mins ", durationMinutes);
+        // 
+        let durationSeconds = Math.floor(duration % 60)
+        if (durationSeconds < 10) {
+            // adds a zero to the seconds timer if the value is less than 10 seconds 
+            durationSeconds = `0${durationSeconds}`;
+        }
+        console.log('seconds', durationSeconds);
+        
+        // Add a delay to stop NAN flashing up as the time is converted to a string
+        if (durationSeconds) {
+            durationEl.textContent = `${durationMinutes}:${durationSeconds}`;
+        }
+                // calculates the display for the duration 
+                const currentMinutes = Math.floor(currentTime/60)
+                console.log("mins ", currentMinutes);
+                // 
+                let currentSeconds = Math.floor(currentTime % 60)
+                if (currentSeconds < 10) {
+                    // adds a zero to the seconds timer if the value is less than 10 seconds 
+                    currentSeconds = `0${currentSeconds}`;
+                }
+                console.log('seconds', currentSeconds);
+                currentTimeEl.textContent = `${currentMinutes}:${currentSeconds}`
     }
 }
 
