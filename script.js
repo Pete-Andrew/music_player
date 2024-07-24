@@ -7,6 +7,10 @@ const prevBtn = document.getElementById('prev');
 const playBtn = document.getElementById('play');
 const nextBtn = document.getElementById('next');
 const slider = document.getElementById('volume-slider');
+const progressContainer = document.getElementById('progress-container');
+const progress = document.getElementById('progress');
+
+
 let muteButton = document.getElementById('mute-button');
 let musicVolume = 0.5;
 
@@ -43,8 +47,6 @@ const songs = [
         artist: 'Jacinto Design',
     },
 ]
-
-
 
 // volume slider
 // oninput method gets the value of the slider and calls the function. 
@@ -135,6 +137,22 @@ function prevSong() {
 //  On load - select first song from the songs array 
 loadSong(songs[songIndex]);
 
+// updates the progress bar and time
+function updateProgressBar (e) {
+    if (isPlaying) {
+        // object destructuring, makes it possible to use only some of the items from an array or object
+        // in this case it extracts the duration and currentTime from the source element (which in this case is the song)
+        const {duration, currentTime} = e.srcElement;    
+        console.log("Duration " + duration, "Current time " + currentTime);
+        // update the progress bar
+        const progressPercent = (currentTime/duration) * 100;
+        // console.log ("progress percentage " + progressPercent)
+        // updates the css, uses a template literal as this needs to be passed as a string
+        progress.style.width = `${progressPercent}%`;
+    }
+}
+
 // Even listeners
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
+music.addEventListener('timeupdate', updateProgressBar);
