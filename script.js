@@ -107,8 +107,8 @@ playBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()))
 
 //update the dom
 function loadSong(song) {
-    title.textContent = song.title;
-    title.textContent = song.artist;
+    title.textContent = song.displayName;
+    artist.textContent = song.artist;
     music.src = `music/${song.name}.mp3`;
     image.src = `img/${song.name}.jpg`;
 }
@@ -145,7 +145,7 @@ function updateProgressBar (e) {
         // object destructuring, makes it possible to use only some of the items from an array or object
         // in this case it extracts the duration and currentTime from the source element (which in this case is the song)
         const {duration, currentTime} = e.srcElement;    
-        console.log("Duration " + duration, "Current time " + currentTime);
+        // console.log("Duration " + duration, "Current time " + currentTime);
         // update the progress bar
         const progressPercent = (currentTime/duration) * 100;
         // console.log ("progress percentage " + progressPercent)
@@ -153,14 +153,14 @@ function updateProgressBar (e) {
         progress.style.width = `${progressPercent}%`;
         // calculates the display for the duration 
         const durationMinutes = Math.floor(duration/60)
-        console.log("mins ", durationMinutes);
+        // console.log("mins ", durationMinutes);
         // 
         let durationSeconds = Math.floor(duration % 60)
         if (durationSeconds < 10) {
             // adds a zero to the seconds timer if the value is less than 10 seconds 
             durationSeconds = `0${durationSeconds}`;
         }
-        console.log('seconds', durationSeconds);
+        // console.log('seconds', durationSeconds);
         
         // Add a delay to stop NAN flashing up as the time is converted to a string
         if (durationSeconds) {
@@ -168,19 +168,37 @@ function updateProgressBar (e) {
         }
                 // calculates the display for the duration 
                 const currentMinutes = Math.floor(currentTime/60)
-                console.log("mins ", currentMinutes);
+                // console.log("mins ", currentMinutes);
                 // 
                 let currentSeconds = Math.floor(currentTime % 60)
                 if (currentSeconds < 10) {
                     // adds a zero to the seconds timer if the value is less than 10 seconds 
                     currentSeconds = `0${currentSeconds}`;
                 }
-                console.log('seconds', currentSeconds);
+                // console.log('seconds', currentSeconds);
                 currentTimeEl.textContent = `${currentMinutes}:${currentSeconds}`
     }
+}
+
+function setProgressBar (e) {
+    // console.log(e);
+    // gets the width of the progress bar
+    const width = this.clientWidth
+    // console.log("width", width);
+    // tells you where on the progress bar has been clicked
+    const clickX = e.offsetX
+    // console.log("clickX", clickX);
+    // gets the song duration by destructuring the object
+    const {duration} = music;
+    // console.log("percentage through the song:",clickX/width, "%");
+    // can use the currentTime attribute of the audio object to set the progress bar 
+    music.currentTime = (clickX/width) * duration; 
 }
 
 // Even listeners
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
+//this event listener will auto play the next song
+music.addEventListener('ended', nextSong);
 music.addEventListener('timeupdate', updateProgressBar);
+progressContainer.addEventListener('click', setProgressBar)
